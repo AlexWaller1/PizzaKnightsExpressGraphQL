@@ -44,7 +44,8 @@ const PizzaOwnerType = new GraphQLObjectType({
   description: "This is an Owner of a  Pizza Place",
   fields: () => ({
     id: { type: GraphQLNonNull(GraphQLInt) },
-    name: { type: GraphQLNonNull(GraphQLString) }
+    name: { type: GraphQLNonNull(GraphQLString) },
+    pizzaPlace: { type: new GraphQLList(PizzaPlaceType) }
   })
 });
 
