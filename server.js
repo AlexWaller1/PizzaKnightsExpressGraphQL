@@ -45,6 +45,10 @@ const RootQueryType = new GraphQLObjectType({
   })
 });
 
+const schema2 = new GraphQLSchema({
+  query: RootQueryType
+});
+
 const schema = new GraphQLSchema({
   query: new GraphQLObjectType({
     name: "HelloWorld",
