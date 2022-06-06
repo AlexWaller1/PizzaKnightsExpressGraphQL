@@ -1,7 +1,12 @@
 const express = require("express");
 
 const { graphqlHTTP } = require("express-graphql");
-const { GraphQLSchema, GraphQLObjectType, GraphQLString } = require("graphql");
+const {
+  GraphQLSchema,
+  GraphQLObjectType,
+  GraphQLString,
+  GraphQLList
+} = require("graphql");
 const app = express();
 
 const pizzaOwners = [
@@ -15,6 +20,18 @@ const pizzaPlaces = [
   { id: 2, name: "Gallagher's", ownerId: 2 },
   { id: 3, name: "Dominick's", ownerId: 3 }
 ];
+
+const RootQueryType = new GraphQLObjectType({
+  name: "Query",
+  description: "Root Query",
+  fields: () => ({
+    pizzaPlaces: {
+      type: new GraphQLList(PizzaPlaceType),
+      description: "List of Pizza Places",
+      resolve: () => pizzaPlaces
+    }
+  })
+});
 
 const schema = new GraphQLSchema({
   query: new GraphQLObjectType({
