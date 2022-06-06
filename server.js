@@ -24,12 +24,27 @@ const pizzaPlaces = [
 ];
 
 const PizzaPlaceType = new GraphQLObjectType({
-  name: "Pizza Place",
+  name: "PizzaPlaces",
   description: "This is a Pizza Place",
   fields: () => ({
     id: { type: GraphQLNonNull(GraphQLInt) },
     name: { type: GraphQLNonNull(GraphQLString) },
-    ownerId: { type: GraphQLNonNull(GraphQLInt) }
+    ownerId: { type: GraphQLNonNull(GraphQLInt) },
+    owner: {
+      type: OwnerType,
+      resolve: pizzaPlace => {
+        return pizzaOwners.find(owner => owner.id === pizzaPlace.ownerId);
+      }
+    }
+  })
+});
+
+const PizzaOwnerType = new GraphQLObjectType({
+  name: "PizzaPlaces",
+  description: "This is a Pizza Place",
+  fields: () => ({
+    id: { type: GraphQLNonNull(GraphQLInt) },
+    name: { type: GraphQLNonNull(GraphQLString) }
   })
 });
 
@@ -64,7 +79,7 @@ const schema = new GraphQLSchema({
 app.use(
   "/graphql",
   graphqlHTTP({
-    schema: schema,
+    schema: schema2,
     graphiql: true
   })
 );
