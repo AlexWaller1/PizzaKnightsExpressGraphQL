@@ -5,7 +5,9 @@ const {
   GraphQLSchema,
   GraphQLObjectType,
   GraphQLString,
-  GraphQLList
+  GraphQLList,
+  GraphQLInt,
+  GraphQLNonNull
 } = require("graphql");
 const app = express();
 
@@ -23,7 +25,10 @@ const pizzaPlaces = [
 
 const PizzaPlaceType = new GraphQLObjectType({
   name: "Pizza Place",
-  description: "This is a Pizza Place"
+  description: "This is a Pizza Place",
+  fields: () => ({
+    id: { type: GraphQLNonNull(GraphQLInt) }
+  })
 });
 
 const RootQueryType = new GraphQLObjectType({
