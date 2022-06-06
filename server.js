@@ -4,6 +4,18 @@ const { graphqlHTTP } = require("express-graphql");
 const { GraphQLSchema, GraphQLObjectType, GraphQLString } = require("graphql");
 const app = express();
 
+const pizzaOwners = [
+  { id: 1, name: "Francesco Matterazzo" },
+  { id: 2, name: "Jim Gallagher" },
+  { id: 3, name: "Dominick Salerno" }
+];
+
+const pizzaPlaces = [
+  { id: 1, name: "Francesco's", ownerId: 1 },
+  { id: 2, name: "Gallagher's", ownerId: 2 },
+  { id: 3, name: "Dominick's", ownerId: 3 }
+];
+
 const schema = new GraphQLSchema({
   query: new GraphQLObjectType({
     name: "HelloWorld",
