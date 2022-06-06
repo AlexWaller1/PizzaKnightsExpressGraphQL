@@ -21,6 +21,11 @@ const pizzaPlaces = [
   { id: 3, name: "Dominick's", ownerId: 3 }
 ];
 
+const PizzaPlaceType = new GraphQLObjectType({
+  name: "Pizza Place",
+  description: "This is a Pizza Place"
+});
+
 const RootQueryType = new GraphQLObjectType({
   name: "Query",
   description: "Root Query",
