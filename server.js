@@ -98,6 +98,7 @@ const HomemadePizzaType = new GraphQLObjectType({
     id: { type: GraphQLNonNull(GraphQLInt) },
     name: { type: GraphQLNonNull(GraphQLString) },
     recipe: { type: GraphQLNonNull(GraphQLString) },
+    makerId: { type: GraphQLNonNull(GraphQLInt) },
     maker: {
       type: new GraphQLList(PizzaMakerType),
       resolve: pizza => {
@@ -231,6 +232,25 @@ const RobotMutationType = new GraphQLObjectType({
         };
         pizzaMakers.push(newPizzaMaker);
         return newPizzaMaker;
+      }
+    },
+    addPizzaRecipe: {
+      type: HomemadePizzaType,
+      description: "Add a Pizza Recipe",
+      args: {
+        name: { type: GraphQLNonNull(GraphQLString) },
+        recipe: { type: GraphQLNonNull(GraphQLString) },
+        makerId: { type: GraphQLNonNull(GraphQLInt) }
+      },
+      resolve: (parent, args) => {
+        const newRecipe = {
+          id: pizzaRecipes.length + 1,
+          name: args.name,
+          recipe: args.recipe,
+          makerId: args.makerId
+        };
+        pizzaRecipes.push(newRecipe);
+        return newRecipe;
       }
     }
   })
