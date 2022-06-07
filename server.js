@@ -139,6 +139,16 @@ const RootQueryType = new GraphQLObjectType({
       description: "List of Pizza Places",
       resolve: () => pizzaPlaces
     },
+    pizzaMakers: {
+      type: new GraphQLList(PizzaMakerType),
+      description: "List of Pizza Makers",
+      resolve: () => pizzaMakers
+    },
+    pizzaRecipes: {
+      type: new GraphQLList(HomemadePizzaType),
+      description: "List of Pizza Recipes",
+      resolve: () => pizzaRecipes
+    },
     pizzaOwners: {
       type: new GraphQLList(PizzaOwnerType),
       description: "List of Pizza Owners",
