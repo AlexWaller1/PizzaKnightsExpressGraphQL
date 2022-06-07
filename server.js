@@ -69,6 +69,7 @@ const PizzaPlaceType = new GraphQLObjectType({
       type: PizzaOwnerType,
       resolve: pizzaPlace => {
         return pizzaOwners.find(owner => owner.id === pizzaPlace.ownerId);
+        // a pizza place only has one owner so we can use find
       }
     }
   })
@@ -84,6 +85,7 @@ const PizzaOwnerType = new GraphQLObjectType({
       type: new GraphQLList(PizzaPlaceType),
       resolve: owner => {
         return pizzaPlaces.filter(place => place.ownerId === owner.id);
+        // an owner can have multiple pizza places so we need to use filter
       }
     }
   })
