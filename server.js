@@ -91,7 +91,7 @@ const PizzaOwnerType = new GraphQLObjectType({
   })
 });
 
-const HomemadePizza = new GraphQLObjectType({
+const HomemadePizzaType = new GraphQLObjectType({
   name: "HomemadePizzas",
   description: "These are the Legendary Homemade Pizzas!",
   fields: () => ({
@@ -100,7 +100,9 @@ const HomemadePizza = new GraphQLObjectType({
     recipe: { type: GraphQLNonNull(GraphQLString) },
     maker: {
       type: new GraphQLList(PizzaMakerType),
-      resolve: maker => {}
+      resolve: pizza => {
+        return pizzaMakers.find(maker => maker.id === pizza.makerId);
+      }
     }
   })
 });
@@ -110,7 +112,13 @@ const PizzaMakerType = new GraphQLObjectType({
   description: "These are the Awesome Pizza Makers!",
   fields: () => ({
     id: { type: GraphQLNonNull(GraphQLInt) },
-    name: { type: GraphQLNonNull(GraphQLString) }
+    name: { type: GraphQLNonNull(GraphQLString) },
+    recipes: {
+      type: new GraphQLList(HomemadePizzaType),
+      resolve: maker => {
+        return pizzaRecipes.filter(recipe => recipe.makerId === maker.id);
+      }
+    }
   })
 });
 
