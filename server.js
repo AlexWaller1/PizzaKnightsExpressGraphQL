@@ -105,6 +105,22 @@ const RobotMutationType = new GraphQLObjectType({
           ownerId: args.ownerId
         };
         pizzaPlaces.push(newPlace);
+        return newPlace;
+      }
+    },
+    addPizzaOwner: {
+      type: PizzaOwnerType,
+      description: "Add a Pizza Owner",
+      args: {
+        name: { type: GraphQLNonNull(GraphQLString) }
+      },
+      resolve: (parent, args) => {
+        const newOwner = {
+          id: pizzaOwners.length + 1,
+          name: args.name
+        };
+        pizzaOwners.push(newOwner);
+        return newOwner;
       }
     }
   })
