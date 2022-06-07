@@ -1,6 +1,9 @@
 const express = require("express");
+// must always require express for express server
 
 const { graphqlHTTP } = require("express-graphql");
+// function that express app must use to utilize GraphQL
+
 const {
   GraphQLSchema,
   GraphQLObjectType,
@@ -9,7 +12,10 @@ const {
   GraphQLInt,
   GraphQLNonNull
 } = require("graphql");
+// GraphQL data types  must required here to use in applications
+
 const app = express();
+// must be express app
 
 const pizzaOwners = [
   { id: 1, name: "Francesco Matterazzo" },
