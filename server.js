@@ -75,12 +75,44 @@ const RootQueryType = new GraphQLObjectType({
       type: new GraphQLList(PizzaOwnerType),
       description: "List of Pizza Owners",
       resolve: () => pizzaOwners
+    },
+    pizzaOwner: {
+      type: PizzaOwnerType,
+      description: "A Single Pizza Place Owner",
+      args: {
+        id: { type: GraphQLInt }
+      },
+      resolve: (parent, args) => pizzaOwners.find(owner => owner.id === args.id)
+    }
+  })
+});
+
+const RobotMutationType = new GraphQLObjectType({
+  name: "Mutation",
+  description: "Root Mutation",
+  fields: () => ({
+    addPizzaPlace: {
+      type: PizzaPlaceType,
+      description: "Add a Pizza Place",
+      args: {
+        name: { type: GraphQLNonNull(GraphQLString) },
+        ownerId: { type: GraphQLNonNull(GraphQLInt) }
+      },
+      resolve: (parent, args) => {
+        const newPlace = {
+          id: pizzaPlaces.length + 1,
+          name: args.name,
+          ownerId: args.ownerId
+        };
+        pizzaPlaces.push(newPlace);
+      }
     }
   })
 });
 
 const schema2 = new GraphQLSchema({
-  query: RootQueryType
+  query: RootQueryType,
+  mutation: RobotMutationType
 });
 
 const schema = new GraphQLSchema({
