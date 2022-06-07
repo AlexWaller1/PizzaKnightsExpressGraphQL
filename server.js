@@ -22,11 +22,40 @@ const pizzaOwners = [
   { id: 2, name: "Jim Gallagher" },
   { id: 3, name: "Dominick Salerno" }
 ];
+// test data
 
 const pizzaPlaces = [
   { id: 1, name: "Francesco's", ownerId: 1 },
   { id: 2, name: "Gallagher's", ownerId: 2 },
   { id: 3, name: "Dominick's", ownerId: 3 }
+];
+// test data
+
+const pizzaMakers = [
+  { id: 1, name: "Carmine Johnson" },
+  { id: 2, name: "Dex Garrity" },
+  { id: 3, name: "Rising Dough" }
+];
+
+const pizzaRecipes = [
+  {
+    id: 1,
+    name: "The Bolognese",
+    recipe: "Sausage, Romano Cheese, Bolognese Sauce",
+    makerId: 1
+  },
+  {
+    id: 2,
+    name: "The Pineapple Special",
+    recipe: "Pineapple, Mortadella, Ricotta Cheese",
+    makerId: 2
+  },
+  {
+    id: 3,
+    name: "The Meatball Simmer",
+    recipe: "Meatballs, White Wine, Tomato Puree, Sicilian Cheese",
+    makerId: 3
+  }
 ];
 
 const PizzaPlaceType = new GraphQLObjectType({
@@ -47,7 +76,7 @@ const PizzaPlaceType = new GraphQLObjectType({
 
 const PizzaOwnerType = new GraphQLObjectType({
   name: "PizzaOwners",
-  description: "This is an Owner of a  Pizza Place",
+  description: "This is an Owner of a Pizza Place",
   fields: () => ({
     id: { type: GraphQLNonNull(GraphQLInt) },
     name: { type: GraphQLNonNull(GraphQLString) },
@@ -57,6 +86,29 @@ const PizzaOwnerType = new GraphQLObjectType({
         return pizzaPlaces.filter(place => place.ownerId === owner.id);
       }
     }
+  })
+});
+
+const HomemadePizza = new GraphQLObjectType({
+  name: "HomemadePizzas",
+  description: "These are the Legendary Homemade Pizzas!",
+  fields: () => ({
+    id: { type: GraphQLNonNull(GraphQLInt) },
+    name: { type: GraphQLNonNull(GraphQLString) },
+    recipe: { type: GraphQLNonNull(GraphQLString) },
+    maker: {
+      type: new GraphQLList(PizzaMakerType),
+      resolve: maker => {}
+    }
+  })
+});
+
+const PizzaMakerType = new GraphQLObjectType({
+  name: "PizzaMakers",
+  description: "These are the Awesome Pizza Makers!",
+  fields: () => ({
+    id: { type: GraphQLNonNull(GraphQLInt) },
+    name: { type: GraphQLNonNull(GraphQLString) }
   })
 });
 
