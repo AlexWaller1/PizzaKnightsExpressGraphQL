@@ -45,7 +45,12 @@ const PizzaOwnerType = new GraphQLObjectType({
   fields: () => ({
     id: { type: GraphQLNonNull(GraphQLInt) },
     name: { type: GraphQLNonNull(GraphQLString) },
-    pizzaPlace: { type: new GraphQLList(PizzaPlaceType) }
+    pizzaPlace: {
+      type: new GraphQLList(PizzaPlaceType),
+      resolve: owner => {
+        return pizzaPlaces.filter(place => place.ownerId === owner.id);
+      }
+    }
   })
 });
 
@@ -53,6 +58,14 @@ const RootQueryType = new GraphQLObjectType({
   name: "Query",
   description: "Root Query",
   fields: () => ({
+    pizzaPlace: {
+      type: PizzaPlaceType,
+      description: "A Single Pizza Place",
+      args: {
+        id: { type: GraphQLInt }
+      },
+      resolve: () => pizzaPlaces
+    },
     pizzaPlaces: {
       type: new GraphQLList(PizzaPlaceType),
       description: "List of Pizza Places",
