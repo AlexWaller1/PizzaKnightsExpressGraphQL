@@ -64,7 +64,7 @@ const RootQueryType = new GraphQLObjectType({
       args: {
         id: { type: GraphQLInt }
       },
-      resolve: () => pizzaPlaces
+      resolve: (parent, args) => pizzaPlaces.find(place => place.id === args.id)
     },
     pizzaPlaces: {
       type: new GraphQLList(PizzaPlaceType),
